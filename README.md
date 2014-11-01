@@ -1,29 +1,31 @@
 CEasyListLibrary
 ===================
 
-A Library for easy List Handling. As easy as Python!
+A Library for easy List Handling.
 
-Python List Methods(in bold those that I have implemented):
+Currently only **ints** are supported but I am working on a more generalized solution.
 
- + **append(x)**
+Methods that will be implemented(in bold those that are already implemented):
+
+ + **append()**
  
- + extend(L)
+ + extend()
  
- + **insert(i, x)**
+ + **insert()**
  
- + remove(x)
+ + remove()
  
- + pop(i)
+ + pop()
  
- + index(x)
+ + index()
  
- + count(x)
+ + count()
  
- + sort(cmp=None, key=None, reverse=False)
+ + sort()
  
  + reverse()
 
-I have also implementd **printlist()** , **filllist()** and ***setlist()*** that do not exist in Python. 
+I have also implementd **printlist()** , **filllist()** and ***setlist()*** . 
 
 Please see wiki for examples.
 =
