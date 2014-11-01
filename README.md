@@ -25,6 +25,9 @@ Python List Methods(in bold those that I have implemented):
 
 I have also implementd **printlist()** and **filllist()** that do not exist in Python. 
 
-
 Please see wiki for examples.
 =
+
+
+EasyListLibraryForC is licensed under the MIT license. See the file
+[LICENSE](https://github.com/smekesis/word2ipa/blob/master/LICENSE) for more information.
