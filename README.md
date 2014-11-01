@@ -24,3 +24,7 @@ Python List Methods(in bold those that I have implemented):
  + reverse()
 
 I have also implementd **printlist()** and **filllist()** that do not exist in Python. 
+
+
+Please see wiki for examples.
+=
