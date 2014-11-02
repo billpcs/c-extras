@@ -3,7 +3,8 @@
 
 typedef struct listcreator {
 	int num ;						
-	struct listcreator *next ;			
+	struct listcreator *next ;
+	struct listcreator *last ; 			
 } LIST ;
 
 /*
@@ -21,7 +22,7 @@ It can be used to simulate the Python's syntax : my_list = [1,2,3,4]
 WARNING: arr MUST have as a last value the character '\0' !!! .
 */
 int setlist( int arr[] , LIST **Head  ){
-	if (!deleteList(Head)) return -1 ;
+	if (!dellist(Head)) return -1 ;
 
 	// Get length of array.
 	int len = 0 ;
@@ -36,6 +37,8 @@ int setlist( int arr[] , LIST **Head  ){
 	if ( *Head == NULL )
 		return -1 ;
 	(*Head)->num = arr[0] ;
+	(*Head)->last = malloc(sizeof(LIST)) ;
+	(*Head)->last = *Head ;  
 	(*Head)->next = NULL ;
 	if (len == 1) return 1 ;
 
@@ -49,6 +52,7 @@ int setlist( int arr[] , LIST **Head  ){
 		p = p->next ;
 		p->num = arr[i] ;
 	}
+	(*Head)->last = p ; 
 	p->next = NULL ;
 	return 1;
 
@@ -62,16 +66,19 @@ Returns the 'len' if everything went ok , and -1 if
 there was a problem allocating memory.
 */
 
-int filllist( int value , int len  , LIST **Head )
-{
+int filllist(  int len  , int value , LIST **Head ){
 	LIST *p ;
 	int i ;
 
+	if (!dellist(Head)) return -1 ;
 	if (len < 1) return -1 ; 
+
 	*Head = malloc( sizeof(LIST) ) ;
 	if ( *Head == NULL )
 		return -1 ;
 	(*Head)->num = value ;
+	(*Head)->last = malloc(sizeof(LIST)) ;
+	(*Head)->last = *Head ; 
 	(*Head)->next = NULL ;
 
 	p = *Head ; 
@@ -82,6 +89,7 @@ int filllist( int value , int len  , LIST **Head )
 		p = p->next ;
 		p->num = value ;
 	}
+	(*Head)->last = p ; 
 	p->next = NULL ;
 	return len;
 }
@@ -91,8 +99,7 @@ int filllist( int value , int len  , LIST **Head )
 Appends the element 'elem' to the end of a list.
 Returns 1 if everything went ok , else it returns -1
 */
-int append( int elem ,  LIST **Head )
-{
+int append( int elem ,  LIST **Head ){
 	LIST *p ;
 	int i ;
 
@@ -101,19 +108,20 @@ int append( int elem ,  LIST **Head )
 		if ( *Head == NULL )
 			return -1 ;
 		(*Head)->num = elem;
+		(*Head)->last = malloc(sizeof(LIST)) ;
+		(*Head)->last = *Head ; 
 		(*Head)->next = NULL ;
 		return 1 ; 
 	}
 
 
-	p = *Head ;
-
-	while ( p->next != NULL ) p = p->next ;
-	p->next = malloc( sizeof(LIST) )  ;
+	p = (*Head)->last ;
+	p->next = malloc(sizeof(LIST));
 	if ( p->next == NULL )
 		return -1 ;
 	p = p->next ;
 	p->num = elem ;
+	(*Head)->last = p ; 
 	p->next = NULL ;
 	return 1 ;
 }
@@ -168,19 +176,34 @@ int insert( int index , int elem ,  LIST **Head )
 	}
 	return 0 ;
 }
-//Deletes the list.
 
-int deleteList(LIST **Head ){
+/*
+Returns the length of the list.
+*/
+
+int length(LIST *Head){
+	int len  = 0 ;
+	LIST *p = Head;
+	while(p){
+		len++ ;
+		p = p->next ; 
+	}
+	return len ; 
+}
+
+/*
+Deletes the list.
+*/
+int dellist(LIST **Head ){
 	LIST *p ;
 	p = *Head ; 
 	while (p) {
-	        *Head = p->next;
-	        free(p);
-	        p = *Head ;
+        *Head = p->next;
+        free(p);
+        p = *Head ;
 	}
 	return 1 ; 
 }
-
 
 
 /*
