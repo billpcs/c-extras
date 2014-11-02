@@ -57,12 +57,12 @@ int setlist( int arr[] , LIST **Head  ){
 
 
 /*
-Creates a list of length 'len' and fills it with zeros.
+Creates a list of length 'len' and fills it with value 'value'.
 Returns the 'len' if everything went ok , and -1 if
 there was a problem allocating memory.
 */
 
-int filllist( int len , LIST **Head )
+int filllist( int value , int len  , LIST **Head )
 {
 	LIST *p ;
 	int i ;
@@ -71,7 +71,7 @@ int filllist( int len , LIST **Head )
 	*Head = malloc( sizeof(LIST) ) ;
 	if ( *Head == NULL )
 		return -1 ;
-	(*Head)->num = 0 ;
+	(*Head)->num = value ;
 	(*Head)->next = NULL ;
 
 	p = *Head ; 
@@ -80,7 +80,7 @@ int filllist( int len , LIST **Head )
 		if ( p->next == NULL )
 			return -1 ;
 		p = p->next ;
-		p->num = 0 ;
+		p->num = value ;
 	}
 	p->next = NULL ;
 	return len;
@@ -195,5 +195,3 @@ void printlist( LIST *Start )
 	}
 	printf("] \n");
 }
-
-
