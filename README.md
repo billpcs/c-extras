@@ -3,7 +3,7 @@ CEasyListLibrary
 
 A Library for easy List Handling.
 
-Currently only **ints** are supported but I am working on a more generalized solution.
+Only **ints** are supported. This means that you can not have list of list , list of floats etc.
 
 Methods that will be implemented(in bold those that are already implemented):
 
