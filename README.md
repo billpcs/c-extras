@@ -25,7 +25,8 @@ Methods that will be implemented(in bold those that are already implemented):
  
  + reverse()
 
-I have also implementd **printlist()** , **filllist()** and ***setlist()*** . 
+I have also implementd:
+**printlist()** , **filllist()** , ***setlist()*** , ***length()*** and ***getitem()***. 
 
 Please see wiki for examples.
 =
