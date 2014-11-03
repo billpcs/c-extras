@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
 typedef struct listcreator {
 	int num ;						
 	struct listcreator *next ;
@@ -15,6 +17,19 @@ int newlist(LIST **Head){
 	return 1; 
 }
 
+/*
+Deletes the list.
+*/
+int dellist(LIST **Head ){
+	LIST *p ;
+	p = *Head ; 
+	while (p) {
+        *Head = p->next;
+        free(p);
+        p = *Head ;
+	}
+	return 1 ; 
+}
 
 /*
 Takes the array pointed to by arr and saves its values in a linked list.
@@ -187,19 +202,33 @@ int length(LIST *Head){
 }
 
 /*
-Deletes the list.
+Returns the sum of all the elements in the list.
 */
-int dellist(LIST **Head ){
-	LIST *p ;
-	p = *Head ; 
-	while (p) {
-        *Head = p->next;
-        free(p);
-        p = *Head ;
+long long int sum(LIST *Head){
+	long long int sum = 0 ; 
+	LIST *p = Head;
+	while(p){
+		sum += p->num ; 
+		p = p->next ; 
 	}
-	return 1 ; 
+	return sum ; 
 }
 
+/*
+Get item by index. If the index is out of range
+it returns the first item in the list.
+*/
+int getitem(int index ,LIST *Head){
+	if (index > length(Head) || index == 0) return Head->num ; 
+	int current = 0 ;
+	LIST *p = Head;
+	while(p){
+		if (index == current) return p->num ; 
+		p = p->next ; 
+		current ++ ;
+	}
+	return ; 	
+}
 
 /*
 Prints out the contents of the list.
