@@ -180,15 +180,10 @@ int insert( int index , int elem ,  LIST **Head )
 /*
 Returns the length of the list.
 */
-
 int length(LIST *Head){
-	int len  = 0 ;
-	LIST *p = Head;
-	while(p){
-		len++ ;
-		p = p->next ; 
-	}
-	return len ; 
+	if (Head)
+		return ( ( (void *)Head->last - (void *)Head ) / 32 ) ; 
+	return 0 ; 
 }
 
 /*
