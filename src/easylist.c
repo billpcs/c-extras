@@ -197,7 +197,7 @@ Returns the length of the list.
 */
 int length(LIST *Head){
 	if (Head)
-		return ( ( (void *)Head->last - (void *)Head ) / 32 ) ; 
+		return ( ( (void *)Head->last - (void *)Head ) / (sizeof(LIST)+sizeof((void *)Head)) ) ; 
 	return 0 ; 
 }
 
