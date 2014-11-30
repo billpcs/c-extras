@@ -15,7 +15,7 @@ Methods that will be implemented(in bold those that are already implemented):
  
  + remove()
  
- + pop()
+ + **pop()**
  
  + index()
  
