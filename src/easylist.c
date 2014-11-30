@@ -231,6 +231,16 @@ int getitem(int index ,LIST *Head){
 }
 
 /*
+Pops the first element out of the list.
+*/
+int pop(LIST **Head){
+	LIST *p = *Head; 
+	(*Head) = (*Head)->next ; 
+	free(p) ;
+	return 1 ; 
+}
+
+/*
 Prints out the contents of the list.
 */
 void printlist( LIST *Start )
