@@ -153,7 +153,6 @@ int insert( int index , int elem ,  NODE **Head )
 {
 	NODE *p, *p1 , *p2 ;
 	// If the given index is not valid 
-	printf("%d %d\n", index , length(*Head) );
 	if (index > length(*Head) ) return -1 ; 
 	// If the list is empty and index > 0 
 	if ( *Head == NULL && index > 0 ) {
