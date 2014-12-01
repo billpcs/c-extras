@@ -9,24 +9,29 @@ Methods that will be implemented(in bold those that are already implemented):
 
  + **append()**
  
- + extend()
- 
  + **insert()**
  
- + remove()
+ + **removeitem()**
  
  + **pop()**
  
  + index()
  
- + count()
+ + **count()**
  
  + sort()
  
  + reverse()
 
-I have also implementd:
-**printlist()** , **filllist()** , ***setlist()*** , ***length()*** and ***getitem()***. 
+ + **printlist()**
+
+ + **filllist()**
+
+ + **setlist()**
+
+ + **length()**
+
+ + **getitem()**
 
 Please see wiki for examples.
 =
