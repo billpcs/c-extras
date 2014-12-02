@@ -296,6 +296,22 @@ int removeitem(int key , NODE **Head){
 }
 
 /*
+Returns the first index of 'key'.
+Returns -1 if the 'key' was not found.
+*/
+int index(int key , NODE **Head){
+  NODE *p = *Head ; 
+  int index = 0 ; 
+  while( p != NULL ){
+    if ( p->num == key) return index ; 
+    index ++ ;
+    p = p->next ; 
+  }
+  return -1 ; 
+}
+
+
+/*
 Prints out the contents of the list.
 */
 void printlist( NODE *Start )
