@@ -15,13 +15,13 @@ Methods that will be implemented(in bold those that are already implemented):
  
  + **pop()**
  
- + index()
+ + **index()**
  
  + **count()**
  
  + sort()
  
- + reverse()
+ + **reverse()**
 
  + **printlist()**
 
