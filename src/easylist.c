@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-
+#include "easylist.h" 
 
 typedef struct listcreator {
 	int num ;						
-	struct listcreator *next ;
-	struct listcreator *last ; 			
+	struct listcreator *next ;		
 } NODE ;
 
 /*
@@ -21,8 +19,7 @@ int newlist(NODE **Head){
 Deletes the list.
 */
 int dellist(NODE **Head ){
-	NODE *p ;
-	p = *Head ; 
+	NODE *p  = *Head ; 
 	while (p) {
         *Head = p->next;
         free(p);
@@ -39,11 +36,7 @@ WARNING: arr MUST have as a last value the character '\0' !!! .
 int setlist( int arr[] , NODE **Head  ){
 	if (!dellist(Head)) return -1 ;
 
-	// Get length of array.
-	int len = 0 ;
-	while(arr[len++]) ;
-
-	if (arr[0] == '\0') {
+	if (!arr[0]) {
 		*Head = NULL ;
 		return 1 ;
 	}
@@ -51,23 +44,19 @@ int setlist( int arr[] , NODE **Head  ){
 	*Head = malloc( sizeof(NODE) ) ;
 	if ( *Head == NULL )
 		return -1 ;
-	(*Head)->num = arr[0] ;
-	(*Head)->last = malloc(sizeof(NODE)) ;
-	(*Head)->last = *Head ;  
-	(*Head)->next = NULL ;
-	if (len == 1) return 1 ;
 
-	NODE *p ; 
-	p = *Head ; 
+	(*Head)->num = arr[0] ;
+	(*Head)->next = NULL ;
+
+	NODE *p = *Head ; 
 	int i ; 
-	for( i = 1 ; i < len - 1 ; i++ ){
+	for( i = 1 ; arr[i] ; i++ ){
 		p->next = malloc( sizeof(NODE) )  ;
 		if ( p->next == NULL )
 			return -1 ;
 		p = p->next ;
 		p->num = arr[i] ;
 	}
-	(*Head)->last = p ; 
 	p->next = NULL ;
 	return 1;
 
@@ -92,8 +81,6 @@ int filllist(  int len  , int value , NODE **Head ){
 	if ( *Head == NULL )
 		return -1 ;
 	(*Head)->num = value ;
-	(*Head)->last = malloc(sizeof(NODE)) ;
-	(*Head)->last = *Head ; 
 	(*Head)->next = NULL ;
 
 	p = *Head ; 
@@ -104,7 +91,6 @@ int filllist(  int len  , int value , NODE **Head ){
 		p = p->next ;
 		p->num = value ;
 	}
-	(*Head)->last = p ; 
 	p->next = NULL ;
 	return len;
 }
@@ -117,26 +103,10 @@ Returns 1 if everything went ok , else it returns -1
 int append( int elem ,  NODE **Head ){
 	NODE *p ;
 	int i ;
-
-	if ( *Head == NULL ){
-		*Head = malloc( sizeof(NODE) ) ;
-		if ( *Head == NULL )
-			return -1 ;
-		(*Head)->num = elem;
-		(*Head)->last = malloc(sizeof(NODE)) ;
-		(*Head)->last = *Head ; 
-		(*Head)->next = NULL ;
-		return 1 ; 
-	}
-	p = (*Head)->last ;
-	p->next = malloc(sizeof(NODE));
-	if ( p->next == NULL )
-		return -1 ;
-	p = p->next ;
-	p->num = elem ;
-	(*Head)->last = p ; 
-	p->next = NULL ;
-	return 1 ;
+	*Head = reverselist(Head) ;
+	insert(0 , elem , Head) ;
+	*Head = reverselist(Head) ;
+	return 1 ;  
 }
 
 
@@ -149,11 +119,10 @@ WARNING: It will not insert an element in the
 last place of the list unless the list is empty.
 */
 
-int insert( int index , int elem ,  NODE **Head )
-{
+int insert( int index , int elem ,  NODE **Head ){
 	NODE *p, *p1 , *p2 ;
 	// If the given index is not valid 
-	if (index > length(*Head) ) return -1 ; 
+	if (index > length(Head) ) return -1 ; 
 	// If the list is empty and index > 0 
 	if ( *Head == NULL && index > 0 ) {
 		return -1 ;
@@ -163,20 +132,20 @@ int insert( int index , int elem ,  NODE **Head )
 		if ( *Head == NULL ) return -1 ;
 		(*Head)->num = elem ; 
 		(*Head)->next = NULL ;
-		(*Head)->last = *Head ; 
+		//(*Head)->last = *Head ; 
 		return 1 ;  	
 	}
 	if ( index == 0 ){
 		p = malloc(sizeof(NODE)) ; 
 		if ( p == NULL) return -1 ;
 		p->next = *Head ; 
-		p->last = (*Head)->last ;
+		//p->last = (*Head)->last ;
 		p->num = elem ;
 		(*Head) = p ;  
 		return 1 ;
 	}
 	//	Search to find the correct place to insert 'elem'
-	if ( index == length(*Head) ){
+	if ( index == length(Head) ){
 		append(index , Head) ; 
 		return 1 ;
 	}
@@ -203,12 +172,13 @@ int insert( int index , int elem ,  NODE **Head )
 /*
 Returns the length of the list.
 */
-int length(NODE *Head){
-	int len = 0 ; 
-	NODE *p = Head ; 
-	while(p) {
+int length(NODE **Head){
+	if (*Head == NULL) return 0 ; 
+	int len = 1 ; 
+	NODE *p = *Head ;
+	while(p->next) {
 		len++ ;
-		p = p -> next ;
+		p = p->next	;
 	}
 	return len ; 
 }
@@ -216,9 +186,9 @@ int length(NODE *Head){
 /*
 Returns the sum of all the elements in the list.
 */
-long long int sum(NODE *Head){
+long long int sum(NODE **Head){
 	long long int sum = 0 ; 
-	NODE *p = Head;
+	NODE *p = *Head;
 	while(p){
 		sum += p->num ; 
 		p = p->next ; 
@@ -230,16 +200,15 @@ long long int sum(NODE *Head){
 Get item by index. If the index is out of range
 it returns the first item in the list.
 */
-int getitem(int index ,NODE *Head){
-	if (index > length(Head) || index == 0) return Head->num ; 
+int getitem(int index ,NODE **Head){
+	if (index > length(Head) || index == 0) return (*Head)->num ; 
 	int current = 0 ;
-	NODE *p = Head;
+	NODE *p = *Head;
 	while(p){
 		if (index == current) return p->num ; 
 		p = p->next ; 
 		current ++ ;
-	}
-	return ; 	
+	}	
 }
 
 /*
@@ -248,7 +217,6 @@ Pops the first element out of the list.
 int pop(NODE **Head){
 	NODE *p = *Head; 
 	(*Head) = (*Head)->next ; 
-	(*Head)->last = p->last ; 
 	free(p) ;
 	return 1 ; 
 }
@@ -272,21 +240,21 @@ Removes the first item that has the value
 'key' from the list.
 */
 int removeitem(int key , NODE **Head){
-	NODE *p = *Head; 
-	// If the key is found in the first place of the list
+	NODE *p = *Head ; 
+	// If list is empty 
 	if ( *Head == NULL ) return -1 ;
+	// If the key is found in the first place of the list
 	if ( (*Head)->num == key ) {
 		(*Head) = (*Head)->next ;
 		free(p) ;
 		return 1 ; 
 	}
-	p = *Head ; 
 	while ( p->next != NULL){
 		if ( p->next->num == key ){
 			NODE *temp = p ; 
 			p = p -> next ;  
 			temp->next = p -> next ;
-			(*Head)->last = temp ; 
+			//(*Head)->last = temp ; 
 			free(p) ;
 			return 1 ;  
 		}
@@ -299,7 +267,7 @@ int removeitem(int key , NODE **Head){
 Returns the first index of 'key'.
 Returns -1 if the 'key' was not found.
 */
-int index(int key , NODE **Head){
+int indexlist(int key , NODE **Head){
   NODE *p = *Head ; 
   int index = 0 ; 
   while( p != NULL ){
@@ -310,16 +278,30 @@ int index(int key , NODE **Head){
   return -1 ; 
 }
 
+NODE * reverselist(NODE **Head){
+    NODE *next ;
+    NODE *previous =  NULL ;
+    NODE *current  = *Head ;
+    while (current != NULL ){
+        next = current->next ;
+        current->next = previous ;
+        previous = current ;
+        current = next ;
+    }
+    *Head = previous ;
+    return *Head ; 
+}
+
 
 /*
 Prints out the contents of the list.
 */
-void printlist( NODE *Start )
-{
+void printlist( NODE **Start ){
+	NODE *p = *Start ; 
 	printf("( ");
-	while ( Start != NULL ){
-		printf( "%d ", Start->num ) ;
-		Start = (Start)->next ;
+	while ( p != NULL ){
+		printf( "%d ", p->num ) ;
+		p = p->next ;
 	}
 	printf(") \n");
 }
