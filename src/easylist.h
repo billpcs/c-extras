@@ -12,5 +12,5 @@ int pop(NODE **Head) ;
 int count(int key , NODE **Head) ; 
 int removeitem(int key , NODE **Head) ;
 int indexlist(int key , NODE **Head) ;  
+void reverselist(NODE **Head) ; 
 void printlist( NODE **Start ) ; 
-NODE * reverselist(NODE **Head) ; 

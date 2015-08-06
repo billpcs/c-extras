@@ -103,9 +103,9 @@ Returns 1 if everything went ok , else it returns -1
 int append( int elem ,  NODE **Head ){
 	NODE *p ;
 	int i ;
-	*Head = reverselist(Head) ;
+	reverselist(Head) ;
 	insert(0 , elem , Head) ;
-	*Head = reverselist(Head) ;
+	reverselist(Head) ;
 	return 1 ;  
 }
 
@@ -278,7 +278,7 @@ int indexlist(int key , NODE **Head){
   return -1 ; 
 }
 
-NODE * reverselist(NODE **Head){
+void reverselist(NODE **Head){
     NODE *next ;
     NODE *previous =  NULL ;
     NODE *current  = *Head ;
@@ -289,7 +289,6 @@ NODE * reverselist(NODE **Head){
         current = next ;
     }
     *Head = previous ;
-    return *Head ; 
 }
 
 
@@ -304,4 +303,11 @@ void printlist( NODE **Start ){
 		p = p->next ;
 	}
 	printf(") \n");
+}
+
+
+int main(int argc, char const *argv[])
+{
+	
+	return 0;
 }
