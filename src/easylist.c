@@ -102,9 +102,8 @@ Returns 1 if everything went ok , else it returns -1
 */
 int append( int elem ,  NODE **Head ){
 	NODE *p ;
-	int i ;
 	reverselist(Head) ;
-	insert(0 , elem , Head) ;
+	insert(elem, 0, Head) ;
 	reverselist(Head) ;
 	return 1 ;  
 }
@@ -119,10 +118,7 @@ WARNING: It will not insert an element in the
 last place of the list unless the list is empty.
 */
 
-int insert( int index , int elem ,  NODE **Head ){
-	NODE *p, *p1 , *p2 ;
-	// If the given index is not valid 
-	if (index > length(Head) ) return -1 ; 
+int insert(int elem, int index,  NODE **Head ){
 	// If the list is empty and index > 0 
 	if ( *Head == NULL && index > 0 ) {
 		return -1 ;
@@ -132,41 +128,37 @@ int insert( int index , int elem ,  NODE **Head ){
 		if ( *Head == NULL ) return -1 ;
 		(*Head)->num = elem ; 
 		(*Head)->next = NULL ;
-		//(*Head)->last = *Head ; 
 		return 1 ;  	
 	}
+	NODE *p ; 
 	if ( index == 0 ){
 		p = malloc(sizeof(NODE)) ; 
 		if ( p == NULL) return -1 ;
 		p->next = *Head ; 
-		//p->last = (*Head)->last ;
 		p->num = elem ;
 		(*Head) = p ;  
 		return 1 ;
 	}
 	//	Search to find the correct place to insert 'elem'
 	if ( index == length(Head) ){
-		append(index , Head) ; 
+		append(elem , Head) ; 
 		return 1 ;
 	}
+	NODE *p1 ; 
 	p = (*Head)->next ;
 	int place = 1  ; 
 	while ( p != NULL ){
-		if ( place == index ){
-			p1 = p ;
-			p2 = p->next ; 
-			p2 = malloc( sizeof(NODE)) ;
-			if ( p2 == NULL ) return -1 ;
-			p = p->next ;
-			p->num = p1->num;
+		if ( place == index - 1 ){
+			p1 = malloc(sizeof(NODE)) ; 
+			p1->next = p->next; 
+			p->next = p1 ; 
 			p1->num = elem ; 
-			p->next = p2 ;
 			return 1; 
 		}	
 		place ++ ; 
 		p = p->next ;
 	}
-	return 0 ;
+	return -1 ;
 }
 
 /*
@@ -305,9 +297,3 @@ void printlist( NODE **Start ){
 	printf(") \n");
 }
 
-
-int main(int argc, char const *argv[])
-{
-	
-	return 0;
-}

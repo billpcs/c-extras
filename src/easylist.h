@@ -4,7 +4,7 @@ int dellist(NODE **Head ) ;
 int filllist(  int len  , int value , NODE **Head ) ;
 int append( int elem ,  NODE **Head ) ;
 int setlist( int arr[] , NODE **Head ) ; 
-int insert( int index , int elem ,  NODE **Head ) ;
+int insert(int elem, int index,  NODE **Head ) ;
 int length(NODE **Head) ; 
 long long int sum(NODE **Head) ; 
 int getitem(int index ,NODE **Head) ; 
