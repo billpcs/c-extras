@@ -38,4 +38,4 @@ Please see wiki for examples.
 
 
 CEasyListLibrary is licensed under the MIT license. See the file
-[LICENSE](https://github.com/smekesis/word2ipa/blob/master/LICENSE) for more information.
+[LICENSE](https://raw.githubusercontent.com/billpcs/CEasyListLibrary/master/LICENCE) for more information.
