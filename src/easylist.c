@@ -2,15 +2,17 @@
 #include <stdlib.h>
 #include "easylist.h" 
 
+
+
 typedef struct listcreator {
-	int num ;						
+	TYPE_ num ;						
 	struct listcreator *next ;		
 } NODE ;
 
 /*
 Generates a new empty list.
 */
-int newlist(NODE **Head){
+int new_list(NODE **Head){
 	*Head = NULL ; 
 	return 1; 
 }
@@ -18,7 +20,7 @@ int newlist(NODE **Head){
 /*
 Deletes the list.
 */
-int dellist(NODE **Head ){
+int del_list(NODE **Head ){
 	NODE *p  = *Head ; 
 	while (p) {
         *Head = p->next;
@@ -33,8 +35,8 @@ Takes the array pointed to by arr and saves its values in a linked list.
 It can be used to simulate the Python's syntax : my_list = [1,2,3,4] 
 WARNING: arr MUST have as a last value the character '\0' !!! .
 */
-int setlist( int arr[] , NODE **Head  ){
-	if (!dellist(Head)) return -1 ;
+int set_list( TYPE_ arr[] , NODE **Head  ){
+	if (!del_list(Head)) return -1 ;
 
 	if (!arr[0]) {
 		*Head = NULL ;
@@ -70,11 +72,11 @@ Returns the 'len' if everything went ok , and -1 if
 there was a problem allocating memory.
 */
 
-int filllist(  int len  , int value , NODE **Head ){
+int fill_list(  int len  , TYPE_ value , NODE **Head ){
 	NODE *p ;
 	int i ;
 
-	if (!dellist(Head)) return -1 ;
+	if (!del_list(Head)) return -1 ;
 	if (len < 1) return -1 ; 
 
 	*Head = malloc( sizeof(NODE) ) ;
@@ -100,11 +102,11 @@ int filllist(  int len  , int value , NODE **Head ){
 Appends the element 'elem' to the end of a list.
 Returns 1 if everything went ok , else it returns -1
 */
-int append( int elem ,  NODE **Head ){
+int append_list( TYPE_ elem ,  NODE **Head ){
 	NODE *p ;
-	reverselist(Head) ;
-	insert(elem, 0, Head) ;
-	reverselist(Head) ;
+	reverse_list(Head) ;
+	insert_list(elem, 0, Head) ;
+	reverse_list(Head) ;
 	return 1 ;  
 }
 
@@ -118,7 +120,7 @@ WARNING: It will not insert an element in the
 last place of the list unless the list is empty.
 */
 
-int insert(int elem, int index,  NODE **Head ){
+int insert_list(TYPE_ elem, int index,  NODE **Head ){
 	// If the list is empty and index > 0 
 	if ( *Head == NULL && index > 0 ) {
 		return -1 ;
@@ -140,8 +142,8 @@ int insert(int elem, int index,  NODE **Head ){
 		return 1 ;
 	}
 	//	Search to find the correct place to insert 'elem'
-	if ( index == length(Head) ){
-		append(elem , Head) ; 
+	if ( index == length_list(Head) ){
+		append_list(elem , Head) ; 
 		return 1 ;
 	}
 	NODE *p1 ; 
@@ -164,7 +166,7 @@ int insert(int elem, int index,  NODE **Head ){
 /*
 Returns the length of the list.
 */
-int length(NODE **Head){
+int length_list(NODE **Head){
 	if (*Head == NULL) return 0 ; 
 	int len = 1 ; 
 	NODE *p = *Head ;
@@ -178,8 +180,8 @@ int length(NODE **Head){
 /*
 Returns the sum of all the elements in the list.
 */
-long long int sum(NODE **Head){
-	long long int sum = 0 ; 
+double sum(NODE **Head){
+	double sum = 0 ; 
 	NODE *p = *Head;
 	while(p){
 		sum += p->num ; 
@@ -192,8 +194,8 @@ long long int sum(NODE **Head){
 Get item by index. If the index is out of range
 it returns the first item in the list.
 */
-int getitem(int index ,NODE **Head){
-	if (index > length(Head) || index == 0) return (*Head)->num ; 
+int getitem_list(int index ,NODE **Head){
+	if (index > length_list(Head) || index == 0) return (*Head)->num ; 
 	int current = 0 ;
 	NODE *p = *Head;
 	while(p){
@@ -206,7 +208,7 @@ int getitem(int index ,NODE **Head){
 /*
 Pops the first element out of the list.
 */
-int pop(NODE **Head){
+int pop_list(NODE **Head){
 	NODE *p = *Head; 
 	(*Head) = (*Head)->next ; 
 	free(p) ;
@@ -217,7 +219,7 @@ int pop(NODE **Head){
 Returns the number of occurrences of 'key'
 in the list.
 */
-int count(int key , NODE **Head){
+int count_list(TYPE_ key , NODE **Head){
 	int times = 0 ;
 	NODE *p = *Head ;
 	while( p != NULL){
@@ -231,7 +233,7 @@ int count(int key , NODE **Head){
 Removes the first item that has the value 
 'key' from the list.
 */
-int removeitem(int key , NODE **Head){
+int removeitem_list(TYPE_ key , NODE **Head){
 	NODE *p = *Head ; 
 	// If list is empty 
 	if ( *Head == NULL ) return -1 ;
@@ -259,7 +261,7 @@ int removeitem(int key , NODE **Head){
 Returns the first index of 'key'.
 Returns -1 if the 'key' was not found.
 */
-int indexlist(int key , NODE **Head){
+int indexof_list(TYPE_ key, NODE **Head){
   NODE *p = *Head ; 
   int index = 0 ; 
   while( p != NULL ){
@@ -270,7 +272,7 @@ int indexlist(int key , NODE **Head){
   return -1 ; 
 }
 
-void reverselist(NODE **Head){
+void reverse_list(NODE **Head){
     NODE *next ;
     NODE *previous =  NULL ;
     NODE *current  = *Head ;
@@ -287,13 +289,12 @@ void reverselist(NODE **Head){
 /*
 Prints out the contents of the list.
 */
-void printlist( NODE **Start ){
+void print_list( NODE **Start ){
 	NODE *p = *Start ; 
 	printf("( ");
 	while ( p != NULL ){
-		printf( "%d ", p->num ) ;
+		printf( "%d " , p->num ) ;
 		p = p->next ;
 	}
 	printf(") \n");
 }
-
