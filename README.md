@@ -19,7 +19,7 @@ Methods that will be implemented(in bold those that are already implemented):
  
  + **count()**
  
- + sort()
+ + **sort()**
  
  + **reverse()**
 

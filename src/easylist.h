@@ -15,3 +15,6 @@ int removeitem_list(TYPE_ key, NODE **Head);
 int index_list(TYPE_ key, NODE **Head);
 void reverse_list(NODE **Head);
 void print_list(NODE **Start);
+void merge_sort_list(NODE **Head);
+NODE *_merge_sort_list(NODE *a, NODE *b);
+void split_in_half(NODE *source, NODE **first, NODE **second);

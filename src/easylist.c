@@ -179,7 +179,7 @@ int length_list(NODE **Head) {
 /*
 Returns the sum of all the elements in the list.
 */
-double sum(NODE **Head) {
+double sum_list(NODE **Head) {
   double sum = 0;
   NODE *p = *Head;
   while (p) {
@@ -276,6 +276,10 @@ int indexof_list(TYPE_ key, NODE **Head) {
   return -1;
 }
 
+/*
+  Reverses the list, given the head
+  (The head changes)
+*/
 void reverse_list(NODE **Head) {
   NODE *next;
   NODE *previous = NULL;
@@ -287,6 +291,88 @@ void reverse_list(NODE **Head) {
     current = next;
   }
   *Head = previous;
+}
+
+/*
+  Sorts the linked list, give the head,
+  using the well known, merge sort algorithm
+*/
+void merge_sort_list(NODE **headRef) {
+  NODE *head = *headRef;
+  NODE *a;
+  NODE *b;
+
+  /* Base case -- length 0 or 1 */
+  if ((head == NULL) || (head->next == NULL)) {
+    return;
+  }
+
+  /* Split head into 'a' and 'b' sublists */
+  split_in_half(head, &a, &b);
+
+  /* Recursively sort the sublists */
+  merge_sort_list(&a);
+  merge_sort_list(&b);
+
+  /* answer = merge the two sorted lists together */
+  *headRef = _merge_sort_list(a, b);
+}
+
+/*
+THIS FUNCTION IS SUPPLEMENTARY TO MERGE SORT
+          USE AT YOUR OWN RISK
+*/
+NODE *_merge_sort_list(NODE *a, NODE *b) {
+  NODE *result = NULL;
+
+  /* Base cases */
+  if (a == NULL)
+    return b;
+  else if (b == NULL)
+    return a;
+
+  /* Pick either a or b, and recurse */
+  if (a->num <= b->num) {
+    result = a;
+    result->next = _merge_sort_list(a->next, b);
+  } else {
+    result = b;
+    result->next = _merge_sort_list(a, b->next);
+  }
+  return result;
+}
+
+/*
+  THIS FUNCTION IS SUPPLEMENTARY TO MERGE SORT
+            USE AT YOUR OWN RISK
+  Splits the list in half by altering the two pointers
+*/
+void split_in_half(NODE *source, NODE **first, NODE **second) {
+  NODE *fast;
+  NODE *slow;
+  if (source == NULL || source->next == NULL) {
+    // if length < 2
+    *first = source;
+    *second = NULL;
+  } else {
+    slow = source;
+    fast = source->next;
+
+    // Use the fast' and 'slow' pointers to find the mid
+    while (fast != NULL) {
+      fast = fast->next;
+      if (fast != NULL) {
+        slow = slow->next;
+        fast = fast->next;
+      }
+    }
+
+    //'slow' is now before the midpoint in the list,
+    // so we split it there
+    *first = source;
+    *second = slow->next;
+    slow->next = NULL;
+  }
 }
 
 /*
