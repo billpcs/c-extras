@@ -67,7 +67,6 @@ Creates a list of length 'len' and fills it with value 'value'.
 Returns the 'len' if everything went ok , and -1 if
 there was a problem allocating memory.
 */
-
 int fill_list(int len, TYPE_ value, NODE **Head) {
   NODE *p;
   int i;
@@ -115,7 +114,6 @@ a problem with the memory allocation.
 WARNING: It will not insert an element in the
 last place of the list unless the list is empty.
 */
-
 int insert_list(TYPE_ elem, int index, NODE **Head) {
   // If the list is empty and index > 0
   if (*Head == NULL && index > 0) {
@@ -322,7 +320,7 @@ void merge_sort_list(NODE **headRef) {
 THIS FUNCTION IS SUPPLEMENTARY TO MERGE SORT
           USE AT YOUR OWN RISK
 */
-NODE *_merge_sort_list(NODE *a, NODE *b) {
+static NODE *_merge_sort_list(NODE *a, NODE *b) {
   NODE *result = NULL;
 
   /* Base cases */

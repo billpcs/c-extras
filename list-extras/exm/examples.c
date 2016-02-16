@@ -11,7 +11,7 @@ int main(void) {
   new_list(&test);
   // Print your list
   print_list(&test); // ( )
-  del_list(&lst);
+  del_list(&test);
   return 0;
 }
 
@@ -34,11 +34,11 @@ int main(void) {
 // :
 
 int main(void) {
-  NODE *test;
-  new_list(&test);
-  fill_list(0, 3, &test);
-  print_list(&test); // ( 0 0 0 )
-  del_list(&test);
+  NODE *lst;
+  new_list(&lst);
+  fill_list(0, 3, &lst);
+  print_list(&lst); // ( 0 0 0 )
+  del_list(&lst);
   return 0;
 }
 // The **fill_list** function creates a list with the number you specify as the
@@ -73,14 +73,14 @@ int main(void) {
 // it. Here is an example:
 
 int main(void) {
-  NODE *test;
-  new_list(&test);
+  NODE *lst;
+  new_list(&lst);
   int i;
   for (i = 0; i < 5; i++) {
-    insert(i, 0, &test);
-    print_list(&test);
+    insert(i, 0, &lst);
+    print_list(&lst);
   }
-  del_list(&test);
+  del_list(&lst);
   return 0;
 }
 
@@ -186,14 +186,14 @@ int main(void) {
 // ### Example 8 : Reversing your list.
 
 int main(void) {
-  NODE *test = NULL; // Alternative way
-  // This -> new_list(&test) ; is not needed now
+  NODE *lst = NULL; // Alternative way
+  // This -> new_list(&lst) ; is not needed now
   int i;
   for (i = 0; i < 10; i++) {
-    insert(0, i, &test);
+    insert(0, i, &lst);
   }
-  print_list(&test); // > ( 9 8 7 6 5 4 3 2 1 0 )
-  reverse_list(&test);
-  print_list(&test); // > ( 0 1 2 3 4 5 6 7 8 9 )
+  print_list(&lst); // > ( 9 8 7 6 5 4 3 2 1 0 )
+  reverse_list(&lst);
+  print_list(&lst); // > ( 0 1 2 3 4 5 6 7 8 9 )
   return 0;
 }
