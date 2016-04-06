@@ -24,7 +24,7 @@ int main(void) {
   new_list(&test);
   int i;
   for (i = 0; i < 3; i++)
-    append(0, &test);
+    append_list(0, &test);
   print_list(&test); // ( 0 0 0 )
   del_list(&test);
   return 0;
@@ -83,22 +83,22 @@ int main(void) {
   del_list(&lst);
   return 0;
 }
+/*
+  The output is:
+  ( 0 )
+  ( 1 0 )
+  ( 2 1 0 )
+  ( 3 2 1 0 )
+  ( 4 3 2 1 0 )
+*/
 
-// The _OUTPUT_ is:
-
-// * [ 0 ]
-// * [ 1 0 ]
-// * [ 2 1 0 ]
-// * [ 3 2 1 0 ]
-// * [ 4 3 2 1 0 ]
-
-// ###Example 4 : Getting the length.
+// ###Example 4: Getting the length.
 int main(void) {
   NODE *lst;
   new_list(&lst);
   int i;
   for (i = 0; i < 5; i++) {
-    append(i, &lst);
+    append_list(i, &lst);
   }
   print_list(lst);                            // ( 0 1 2 3 4 )
   printf("> Length: %d\n", length_list(lst)); // > Length: 5
@@ -106,8 +106,8 @@ int main(void) {
   return 0;
 }
 
-// ###Example 5: Getting items.
 
+// ###Example 5: Getting items.
 int main(void) {
   NODE *lst;
   new_list(&lst);
@@ -121,31 +121,30 @@ int main(void) {
   del_list(&lst);
   return 0;
 }
-
 // OUT: 0 1 2 3 4 5 6 7 8 9
 
-// ###Example 6: Summing your list.
 
+// ###Example 6: Summing your list.
 int main(void) {
   NODE *lst;
   new_list(&lst);
   int i;
   for (i = 0; i < 10000; i++) {
-    append_list(i, &lst);
+    append_list(rand()%100, &lst);
   }
-  printf("> %lld\n", sum(&lst)); //> 4999950000
+  printf("> %.0f\n", sum_list(&lst)); //> 497511
   del_list(&lst);
 }
 
-// To demonstrate the speed of sum() function against the classic iteration way:
 
+// To demonstrate the speed of sum() function against the classic iteration way:
 int main(void) {
   NODE *lst;
   new_list(&lst);
   int i;
   long long sumoflist = 0;
   for (i = 0; i < 10000; i++) {
-    append(i, &lst);
+    append_list(rand()%100, &lst);
   }
   int len = length_list(&lst);
   for (i = 0; i < len; i++) {
@@ -154,21 +153,12 @@ int main(void) {
   printf("> %lld\n", sumoflist); //> 4999950000
   del_list(&lst);
 }
-
 // The times using **time** command:
+// 1) Using 'sum': ~1 sec 
+// 2) **Classic iteration** : ~2 sec
 
-// 1) **sum() function** :
-
-//                         real	0m0.609s
-//                         user	0m0.609s
-
-// 2) **Classic iteration** :
-
-//                          real	0m1.075s
-//                          user	0m1.075s
 
 // ###Example 7: Removing items from your list.
-
 int main(void) {
   NODE *lst;
   new_list(&lst);
@@ -183,8 +173,8 @@ int main(void) {
   return 0;
 }
 
-// ### Example 8 : Reversing your list.
 
+// ### Example 8: Reversing your list.
 int main(void) {
   NODE *lst = NULL; // Alternative way
   // This -> new_list(&lst) ; is not needed now
